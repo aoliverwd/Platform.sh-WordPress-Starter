@@ -1,0 +1,45 @@
+# The name of this application, which must be unique within a project.
+name: 'app'
+
+# The type key specifies the language and version for your application.
+type: 'php:7.4'
+
+# PHP Build flavor
+build:
+    flavor: composer
+
+# App relationships
+relationships:
+    database: "db:mysql"
+
+
+# Exposed locations to the web.
+web:
+    locations:
+        '/':
+            root: 'web/public'
+            passthru: '/index.php'
+            index:
+                - index.php
+            scripts: true
+            allow: true
+            rules:
+                \.(css|js|gif|jpe?g|png|ttf|eot|woff2?|otf|cast|mp4|json|ico|svg?|cast|mp4|json|yaml|svg?|ttf)$:
+                    expires: 4w
+
+
+# The size of the persistent disk of the application (in MB).
+disk: 2048
+
+dependencies:
+    php:
+        wp-cli/wp-cli: "^2.2.0"
+
+# Writable mounts
+mounts:
+    'web/public/wp-content/uploads':
+        source: local
+        source_path: 'uploads'
+    'tmp':
+        source: local
+        source_path: 'temp'
